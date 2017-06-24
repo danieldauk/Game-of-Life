@@ -7,15 +7,22 @@ import Cell from "./cell";
 
 class box extends Component {
 
+
 componentWillMount(){
   this.props.generateArray(this.props.width, this.props.height);
 }
 
   renderArray(){
-    console.log(this.props.generatedArray);
     return this.props.generatedArray.map((cell, index)=>{
       return (
-        <Cell key={index} index={index} x={cell.x} y={cell.y} isAlive={cell.isAlive}/>
+        <Cell
+          key={index}
+          index={index}
+          x={cell.x}
+          y={cell.y}
+          isAlive={cell.isAlive}
+          array={this.props.generatedArray}
+          />
       );
     });
   }
