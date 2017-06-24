@@ -1,7 +1,9 @@
 export const SET_WIDTH = "SET_WIDTH";
 export const SET_HEIGHT = "SET_HEIGHT";
 export const GENERATE_ARRAY = "GENERATE_ARRAY";
+export const CREATE_NEW_ARRAY = "CREATE_NEW_ARRAY";
 export const UPDATE_ARRAY = "UPDATE_ARRAY";
+export const EMPTY_NEW_ARRAY = "CREATE_NEW_ARRAY";
 
 export function setWidth(width) {
   return {
@@ -40,11 +42,26 @@ for(var i=0; i<width; i++) {
   }
 }
 
-export function updateArray(oldArray, index, object){
-  var newArray = oldArray.slice(0);
-  newArray[index] = object;
+export function createNewArray(index, object){
+  var newArray = [];
+  newArray[index]=object;
   return{
+    type: CREATE_NEW_ARRAY,
+    payload: newArray
+  }
+}
+
+export function updateArray(newArray){
+  console.log(newArray);
+  return {
     type: UPDATE_ARRAY,
     payload: newArray
+  }
+}
+
+export function emptyNewArray(){
+  return {
+    type: EMPTY_NEW_ARRAY,
+    payload: []
   }
 }

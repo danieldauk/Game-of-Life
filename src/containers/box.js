@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {generateArray} from "../actions/index";
+import {generateArray, updateArray, emptyNewArray} from "../actions/index";
 import Cell from "./cell";
 
 class box extends Component {
@@ -10,7 +10,12 @@ class box extends Component {
 
 componentWillMount(){
   this.props.generateArray(this.props.width, this.props.height);
+  setInterval(()=>{
+    this.props.updateArray(this.props.newArray);
+    this.props.emptyNewArray();
+  }, 2000);
 }
+
 
   renderArray(){
     return this.props.generatedArray.map((cell, index)=>{
@@ -39,11 +44,11 @@ componentWillMount(){
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({generateArray}, dispatch);
+  return bindActionCreators({generateArray, updateArray, emptyNewArray}, dispatch);
 }
 
-function mapStateToProps({width, height, generatedArray}){
-  return {width, height, generatedArray};
+function mapStateToProps({width, height, generatedArray, newArray}){
+  return {width, height, generatedArray, newArray};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(box);

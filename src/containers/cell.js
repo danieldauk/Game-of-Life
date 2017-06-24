@@ -1,15 +1,22 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {updateArray} from "../actions/index";
+import {createNewArray} from "../actions/index";
 
 class cell extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state={
+      x: this.props.x,
+      y: this.props.y,
+      isAlive: this.props.isAlive,
+      index: this.props.index
+    }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.checkForLife();
   }
 
@@ -34,7 +41,7 @@ class cell extends Component {
         isAlive: false
       }
     }
-    this.props.updateArray(this.props.array, this.props.index, thisCell);
+    this.props.createNewArray(this.props.index, thisCell);
   }
 
 
@@ -63,7 +70,7 @@ class cell extends Component {
 
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({updateArray}, dispatch);
+  return bindActionCreators({createNewArray}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(cell);
