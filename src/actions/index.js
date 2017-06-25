@@ -3,7 +3,8 @@ export const SET_HEIGHT = "SET_HEIGHT";
 export const GENERATE_ARRAY = "GENERATE_ARRAY";
 export const CREATE_NEW_ARRAY = "CREATE_NEW_ARRAY";
 export const UPDATE_ARRAY = "UPDATE_ARRAY";
-export const EMPTY_NEW_ARRAY = "CREATE_NEW_ARRAY";
+
+var newArray = [];
 
 export function setWidth(width) {
   return {
@@ -42,26 +43,26 @@ for(var i=0; i<width; i++) {
   }
 }
 
-export function createNewArray(index, object){
-  var newArray = [];
-  newArray[index]=object;
-  return{
-    type: CREATE_NEW_ARRAY,
-    payload: newArray
+export function createNewArray(object){
+  newArray.push(object);
+  if(newArray.length >= 400){
+    var copiedArray = newArray.slice(0);
+    newArray = [];
+    return{
+      type: CREATE_NEW_ARRAY,
+      payload: copiedArray
+    }
+  } else {
+    return{
+      type: CREATE_NEW_ARRAY,
+      payload: []
+    }
   }
 }
 
-export function updateArray(newArray){
-  console.log(newArray);
+export function updateArray(updatedArray){
   return {
     type: UPDATE_ARRAY,
-    payload: newArray
-  }
-}
-
-export function emptyNewArray(){
-  return {
-    type: EMPTY_NEW_ARRAY,
-    payload: []
+    payload: updatedArray
   }
 }

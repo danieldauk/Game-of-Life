@@ -11,13 +11,15 @@ class box extends Component {
 componentWillMount(){
   this.props.generateArray(this.props.width, this.props.height);
   setInterval(()=>{
-    this.props.updateArray(this.props.newArray);
-    this.props.emptyNewArray();
-  }, 2000);
+    if(this.props.newArray.length == 400){
+      this.props.updateArray(this.props.newArray);
+    }
+  }, 10);
 }
 
 
   renderArray(){
+
     return this.props.generatedArray.map((cell, index)=>{
       return (
         <Cell
@@ -44,7 +46,7 @@ componentWillMount(){
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({generateArray, updateArray, emptyNewArray}, dispatch);
+  return bindActionCreators({generateArray, updateArray}, dispatch);
 }
 
 function mapStateToProps({width, height, generatedArray, newArray}){

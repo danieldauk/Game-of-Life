@@ -20,6 +20,10 @@ class cell extends Component {
     this.checkForLife();
   }
 
+  componentDidUpdate(){
+    this.checkForLife();
+  }
+
   checkForLife(){
     const neighborsAlive = this.findNeighbors();
     if(!this.props.isAlive && neighborsAlive ===3) {
@@ -41,7 +45,7 @@ class cell extends Component {
         isAlive: false
       }
     }
-    this.props.createNewArray(this.props.index, thisCell);
+    this.props.createNewArray(thisCell);
   }
 
 
