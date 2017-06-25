@@ -13,7 +13,7 @@ componentWillMount(){
   setInterval(()=>{
     this.props.updateArray(this.props.newArray);
     this.props.emptyNewArray();
-  }, 10);
+  }, 100);
 }
 
 

@@ -27,7 +27,7 @@ for(let i=0; i<width; i++) {
   for(let j=0; j<height; j++) {
     index ++;
     function random(){
-      if(Math.random()<0.5){
+      if(Math.random()<0.2){
         return true;
       } else {
         return false;

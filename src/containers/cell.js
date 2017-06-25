@@ -5,16 +5,6 @@ import {createNewArray} from "../actions/index";
 
 class cell extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state={
-      x: this.props.x,
-      y: this.props.y,
-      isAlive: this.props.isAlive,
-      index: this.props.index
-    }
-  }
 
   componentWillMount(){
     this.checkForLife();
@@ -53,18 +43,20 @@ class cell extends Component {
 
 
   findNeighbors() {
-    const neighbors = this.props.array.filter((neighbor, index)=>{
 
-      return (
-        Math.abs(neighbor[index].x-this.props.x) ==1 && Math.abs(neighbor[index].y-this.props.y) ==1 ||
-        Math.abs(neighbor[index].x-this.props.x) ==0 && Math.abs(neighbor[index].y-this.props.y) ==1 ||
-        Math.abs(neighbor[index].x-this.props.x) ==1 && Math.abs(neighbor[index].y-this.props.y) ==0
-      );
-    });
-    const neighborsAlive = neighbors.filter((neighbor, index)=>{
-      return neighbor[Object.keys(neighbor)[0]].isAlive;
-    });
-    return neighborsAlive.length;
+      var neighbors = 0;
+      for(var i=0; i<100; i++){
+        if(this.props.array[i][i].isAlive){
+          if (
+            Math.abs(this.props.array[i][i].x-this.props.x) ==1 && Math.abs(this.props.array[i][i].y-this.props.y) ==1 ||
+            Math.abs(this.props.array[i][i].x-this.props.x) ==0 && Math.abs(this.props.array[i][i].y-this.props.y) ==1 ||
+            Math.abs(this.props.array[i][i].x-this.props.x) ==1 && Math.abs(this.props.array[i][i].y-this.props.y) ==0
+          ){
+            neighbors++;
+          }
+        };
+      }
+    return neighbors;
   }
 
   render() {
