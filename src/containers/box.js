@@ -13,19 +13,20 @@ componentWillMount(){
   setInterval(()=>{
     this.props.updateArray(this.props.newArray);
     this.props.emptyNewArray();
-  }, 2000);
+  }, 10);
 }
 
 
   renderArray(){
     return this.props.generatedArray.map((cell, index)=>{
+
       return (
         <Cell
           key={index}
           index={index}
-          x={cell.x}
-          y={cell.y}
-          isAlive={cell.isAlive}
+          x={cell[index].x}
+          y={cell[index].y}
+          isAlive={cell[index].isAlive}
           array={this.props.generatedArray}
           />
       );
