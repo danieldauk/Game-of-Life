@@ -6,7 +6,7 @@ export default function(state=[], action){
     case GENERATE_ARRAY:
       return action.payload;
     case UPDATE_ARRAY:
-      return action.payload;
+      return action.payload
     default:
       return state;
   }

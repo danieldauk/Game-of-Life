@@ -20,29 +20,22 @@ class cell extends Component {
     this.checkForLife();
   }
 
-  componentWillUpdate(){
-    this.checkForLife();
-  }
-
   checkForLife(){
     const neighborsAlive = this.findNeighbors();
     if(!this.props.isAlive && neighborsAlive ===3) {
       var thisCell = {
-        index: this.props.index,
         x: this.props.x,
         y: this.props.y,
         isAlive: true
       }
     } else if (this.props.isAlive && (neighborsAlive === 3||neighborsAlive === 2)) {
       var thisCell = {
-        index: this.props.index,
         x: this.props.x,
         y: this.props.y,
         isAlive: true
       }
     } else {
       var thisCell = {
-        index: this.props.index,
         x: this.props.x,
         y: this.props.y,
         isAlive: false
@@ -53,16 +46,15 @@ class cell extends Component {
 
 
   findNeighbors() {
-    const neighbors = this.props.array.filter((neighbor, index)=>{
-
+    const neighbors = this.props.array.filter((neighbor)=>{
       return (
-        Math.abs(neighbor[index].x-this.props.x) ==1 && Math.abs(neighbor[index].y-this.props.y) ==1 ||
-        Math.abs(neighbor[index].x-this.props.x) ==0 && Math.abs(neighbor[index].y-this.props.y) ==1 ||
-        Math.abs(neighbor[index].x-this.props.x) ==1 && Math.abs(neighbor[index].y-this.props.y) ==0
+        Math.abs(neighbor.x-this.props.x) ==1 && Math.abs(neighbor.y-this.props.y) ==1 ||
+        Math.abs(neighbor.x-this.props.x) ==0 && Math.abs(neighbor.y-this.props.y) ==1 ||
+        Math.abs(neighbor.x-this.props.x) ==1 && Math.abs(neighbor.y-this.props.y) ==0
       );
     });
-    const neighborsAlive = neighbors.filter((neighbor, index)=>{
-      return neighbor[Object.keys(neighbor)[0]].isAlive;
+    const neighborsAlive = neighbors.filter((neighbor)=>{
+      return neighbor.isAlive;
     });
     return neighborsAlive.length;
   }
