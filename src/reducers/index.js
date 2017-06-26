@@ -1,15 +1,11 @@
 import {combineReducers} from "redux";
-import ReducerBoxWidth from "./reducerBoxWidth";
-import ReducerBoxHeight from "./reducerBoxHeight";
-import ReducerGenerateArray from "./reducerGenerateArray";
-import ReducerCreateNewArray from "./ReducerCreateNewArray";
+import ReducerBoxSize from "./reducerBoxSize";
+import ReducerCreateBoard from "./reducerCreateBoard";
 
 
 const rootReducer = combineReducers ({
-  width: ReducerBoxWidth,
-  height: ReducerBoxHeight,
-  generatedArray: ReducerGenerateArray,
-  newArray: ReducerCreateNewArray
+  boxSize: ReducerBoxSize,
+  board: ReducerCreateBoard
 });
 
 export default rootReducer;

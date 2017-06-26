@@ -1,12 +1,12 @@
 import React, {Component} from "react";
-import Box from "../containers/box";
+import Board from "../containers/board";
 
 export default class App extends Component {
 
   render(){
     return (
       <div className="main">
-        <Box/>
+        <Board/>
       </div>
     );
   }
