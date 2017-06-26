@@ -37,11 +37,17 @@ export function createNextBoard(boxSize, oldBoard){
 
   for (var i=0; i<boxSize; i++){
 
-    nextBoard.push({id: i, status: ""});
+    nextBoard.push({id: i, status: "cell dead"});
     var neighbors = checkForNeighbors(i, oldBoard, side, boxSize);
 
-    //change status of cell based on number of neighbors--->>
-    //<<---change status of cell based on number of neighbors
+    //change status of cell based on number of neighbors
+    if(neighbors==3 && oldBoard[i].status == "cell dead"){
+      nextBoard[i].status = "cell alive";
+    } else if ((neighbors==3 || neighbors==2) &&
+                (oldBoard[i].status == "cell alive"||oldBoard[i].status == "cell alive old")){
+      nextBoard[i].status = "cell alive old";
+    }
+
   }
 
 
@@ -49,11 +55,11 @@ export function createNextBoard(boxSize, oldBoard){
 
   return {
     type: CREATE_NEXT_BOARD,
-    payload: nextBoard;
+    payload: nextBoard
   }
 
 
-  checkForNeighbors(cell, oldBoard, side, boxSize){
+  function checkForNeighbors(cell, oldBoard, side, boxSize){
     var neighbors = 0;
     var borderCell =0;
     //top boarder ---------------------------->>>
@@ -73,7 +79,7 @@ export function createNextBoard(boxSize, oldBoard){
              neighbors++;
            }
       }
-      //above diagonalabove  right
+      //above diagonal  right
       if(i!=side-1){
         if(oldBoard[boxSize-rowPosition+1].status==="cell alive" ||
            oldBoard[boxSize-rowPosition+1].status==="cell alive old") {
@@ -158,16 +164,195 @@ export function createNextBoard(boxSize, oldBoard){
       }
     }
     //bottom boarder ---------------------------->>>
-    if(i>=boxSize-side && i<boxSize-1){
-
+    if(i>=boxSize-side && i<=boxSize-1){
+      borderCell = 1;
+      var rowPosition = side - (boxSize-i);
+      //above directly
+      if(oldBoard[i-side].status==="cell alive" ||
+        oldBoard[i-side].status==="cell alive old" ){
+          neighbors++;
+      }
+      //above diagonal right
+      if(i!=boxSize-1){
+        if(oldBoard[i-side +1].status==="cell alive" ||
+          oldBoard[i-side + 1].status==="cell alive old"){
+            neighbors++;
+          }
+      }
+      //above diagonal left
+      if(i!=boxSize-side){
+        if(oldBoard[i-side -1].status==="cell alive" ||
+          oldBoard[i-side - 1].status==="cell alive old"){
+            neighbors++;
+          }
+      }
+      //above diagonal right last cell
+      if(i==boxSize-1){
+        if(oldBoard[i-side-side +1].status==="cell alive" ||
+          oldBoard[i-side-side + 1].status==="cell alive old"){
+            neighbors++;
+          }
+      }
+      //above diagonal left first cell
+      if(i==boxSize-side) {
+        if(oldBoard[i-1].status==="cell alive" ||
+          oldBoard[i-1].status==="cell alive old"){
+            neighbors++;
+          }
+      }
+      //right
+      if(i!=boxSize-1){
+        if(oldBoard[i+1].status==="cell alive" ||
+        oldBoard[i+1].status==="cell alive old"){
+            neighbors++;
+        }
+      }
+      //left
+      if(i!=boxSize-side){
+        if(oldBoard[i-1].status==="cell alive" ||
+          oldBoard[i-1].status==="cell alive old"){
+            neighbors++;
+        }
+      }
+      //right last cell
+      if(i==boxSize-1){
+        if(oldBoard[boxSize-side].status==="cell alive" ||
+          oldBoard[boxSize-side].status==="cell alive old" ){
+            neighbors++;
+        }
+      }
+      //left first cell
+      if(i==boxSize-side){
+        if(oldBoard[boxSize-1].status==="cell alive" ||
+          oldBoard[boxSize-1].status==="cell alive old" ){
+            neighbors++;
+        }
+      }
+      //below directly
+      if(oldBoard[rowPosition].status==="cell alive" ||
+        oldBoard[rowPosition].status==="cell alive old" ){
+          neighbors++;
+      }
+      //below diagonal right
+      if(i!=boxSize-1){
+        if(oldBoard[rowPosition+1].status==="cell alive" ||
+          oldBoard[rowPosition+1].status==="cell alive old"){
+            neighbors++;
+        }
+      }
+      //below diagonal left
+      if(i!=boxSize-side){
+        if(oldBoard[rowPosition-1].status==="cell alive" ||
+          oldBoard[rowPosition-1].status==="cell alive old"){
+            neighbors++;
+        }
+      }
+      //below diagonal right last cell
+      if(i==boxSize-1){
+        if(oldBoard[0].status==="cell alive" ||
+          oldBoard[0].status==="cell alive old"){
+            neighbors++;
+        }
+      }
+      //below diagonal left first cell
+      if(i==boxSize-side){
+        if(oldBoard[side-1].status==="cell alive" ||
+          oldBoard[side-1].status==="cell alive old"){
+            neighbors++;
+        }
+      }
     }
     //left boarder ---------------------------->>>
-    if(i%side==0){
+    if(i!=0 && i!=boxSize-side &&i%side==0){
+      borderCell = 1;
+      var rowPosition = side - i;
+
+      //above directly
+        if(oldBoard[i-side].status==="cell alive" ||
+          oldBoard[i-side].status==="cell alive old" ){
+            neighbors++;
+        }
+      //above diagonal left
+        if(oldBoard[i-1].status==="cell alive" ||
+          oldBoard[i-1].status==="cell alive old"){
+            neighbors++;
+        }
+      //above diagonal right
+      if(oldBoard[i-side +1].status==="cell alive" ||
+        oldBoard[i-side + 1].status==="cell alive old"){
+          neighbors++;
+        }
+      //left
+      if(oldBoard[i+side-1].status==="cell alive" ||
+      oldBoard[i+side-1].status==="cell alive old"){
+          neighbors++;
+      }
+      //right
+      if(oldBoard[i+1].status==="cell alive" ||
+      oldBoard[i+1].status==="cell alive old"){
+          neighbors++;
+      }
+      //below directly
+      if(oldBoard[i+side].status==="cell alive" ||
+        oldBoard[i+side].status==="cell alive old" ){
+          neighbors++;
+      }
+      //below diagonal right
+      if(oldBoard[i+side+1].status==="cell alive" ||
+        oldBoard[i+side+1].status==="cell alive old"){
+          neighbors++;
+      }
+      //below diagonal left
+      if(oldBoard[i+side+side-1].status==="cell alive" ||
+        oldBoard[i+side+side-1].status==="cell alive old"){
+          neighbors++;
+      }
 
     }
     //right boarder ---------------------------->>>
-    if((i+1)%side==0){
-      
+    if((i != side-1) && (i != boxSize-1) && ((i+1)%side==0)){
+      borderCell = 1;
+      var rowPosition = side - i;
+      //above directly
+      if(oldBoard[i-side].status==="cell alive" ||
+        oldBoard[i-side].status==="cell alive old" ){
+          neighbors++;
+      }
+      //above diagonal left
+      if(oldBoard[i-side -1].status==="cell alive" ||
+        oldBoard[i-side -1].status==="cell alive old"){
+          neighbors++;
+      }
+      //above diagonal right
+      if(oldBoard[i-side -side +1].status==="cell alive" ||
+        oldBoard[i-side - side +1].status==="cell alive old"){
+          neighbors++;
+      }
+      //right
+      if(oldBoard[i-side+1].status==="cell alive" ||
+        oldBoard[i-side+1].status==="cell alive old"){
+          neighbors++;
+      }
+      //left
+      if(oldBoard[i-1].status==="cell alive" ||
+        oldBoard[i-1].status==="cell alive old"){
+          neighbors++;
+      }
+      //below directly
+      if(oldBoard[i+side].status==="cell alive" ||
+        oldBoard[i+side].status==="cell alive old" ){
+          neighbors++;
+      }
+      //below diagonal right
+      if(oldBoard[i+1].status==="cell alive" ||
+        oldBoard[i+1].status==="cell alive old"){
+          neighbors++;
+      }
+      //below diagonal left
+      if(oldBoard[i+side-1].status==="cell alive" ||
+        oldBoard[i+side-1].status==="cell alive old"){
+          neighbors++;
+      }
     }
     //non-border cells ---------------------------->>>
     if(borderCell == 0) {
@@ -212,6 +397,8 @@ export function createNextBoard(boxSize, oldBoard){
           neighbors++;
       }
     }
+
+    return neighbors;
   }
 
 }

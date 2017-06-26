@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {createInitialBoard} from "../actions/index";
+import {createInitialBoard, createNextBoard} from "../actions/index";
 
 import Cell from "../components/cell";
 
@@ -12,6 +12,10 @@ class board extends Component {
 
 componentWillMount(){
   this.props.createInitialBoard(this.props.boxSize);
+}
+
+componentDidMount(){
+  setInterval(()=>this.props.createNextBoard(this.props.boxSize, this.props.board), 100);
 }
 
 renderBoard(board){
@@ -38,7 +42,7 @@ renderBoard(board){
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({createInitialBoard}, dispatch);
+  return bindActionCreators({createInitialBoard, createNextBoard}, dispatch);
 }
 
 function mapStateToProps({boxSize, board}){
