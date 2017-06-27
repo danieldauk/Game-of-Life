@@ -2,7 +2,7 @@ import React, {Component } from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {setSpeed} from "../actions/index";
+import {setSpeed, clearBoard, createInitialBoard, createNextBoard} from "../actions/index";
 
 
 class controls extends Component{
@@ -13,11 +13,22 @@ class controls extends Component{
       <div>
         <button
           onClick={()=>this.props.start()}
-          >Start</button>
+          >Play</button>
         <button
           onClick={()=>this.props.stop()}
-          >Stop</button>
-        <button>Clear</button>
+          >Pause</button>
+        <button
+          onClick={()=>this.props.clearBoard(this.props.boxSize)}
+          >
+          Clear</button>
+          <button
+            onClick={()=>this.props.createInitialBoard(this.props.boxSize)}
+            >
+            Reset</button>
+            <button
+              onClick={()=>this.props.createNextBoard(this.props.boxSize, this.props.board)}
+              >
+              Step</button>
         <button
           onClick={()=>this.props.setSpeed(10)}
           >10ms
@@ -37,11 +48,11 @@ class controls extends Component{
 
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({setSpeed}, dispatch);
+  return bindActionCreators({setSpeed, clearBoard, createInitialBoard, createNextBoard}, dispatch);
 }
 
-function mapStateToProps({boxSize, speed}){
-  return {boxSize, speed};
+function mapStateToProps({boxSize, speed, board}){
+  return {boxSize, speed, board};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(controls);

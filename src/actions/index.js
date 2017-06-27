@@ -1,9 +1,10 @@
 export const SET_SIZE = "SET_SIZE";
 export const CREATE_INITIAL_BOARD = "CREATE_INITIAL_BOARD";
-export const CREATE_NEXT_BOARD = "CREATE_INITIAL_BOARD";
+export const CREATE_NEXT_BOARD = "CREATE_NEXT_BOARD";
 export const ADD_CELL = "ADD_CELL";
 export const SET_SPEED = "ADD_SPEED";
 export const SET_TIMEOUT = "SET_TIMEOUT";
+export const CLEAR_BOARD = "CLEAR_BOARD";
 
 export function setSize(side) {
   var boxSize = side*side;
@@ -40,6 +41,21 @@ export function addCell(index, board){
     type: ADD_CELL,
     payload: newBoard
   }
+}
+
+export function clearBoard(boxSize){
+
+  var board = [];
+
+  for(var i = 0; i<boxSize; i++){
+    board.push({id: i, status: "cell dead"});
+  }
+
+  return{
+    type: CLEAR_BOARD,
+    payload: board
+  }
+
 }
 
 export function createInitialBoard(boxSize){

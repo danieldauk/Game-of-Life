@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Board from "../containers/board";
 import Controls from "../containers/controls";
+import Generations from "../containers/generationsCounter";
 
 export default class App extends Component {
 
@@ -8,6 +9,7 @@ export default class App extends Component {
     return (
       <div className="main">
         <Board/>
+        <Generations/>
       </div>
     );
   }

@@ -34,7 +34,7 @@ renderBoard(board){
   return board.map((cell, index)=>{
     return (
       <div
-        onClick={()=>this.props.addCell(index, this.props.board)}
+        onMouseDown={()=>this.props.addCell(index, this.props.board)}
         className={cell.status}
         key={index}
       >
