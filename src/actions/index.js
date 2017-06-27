@@ -1,7 +1,7 @@
 export const SET_SIZE = "SET_SIZE";
 export const CREATE_INITIAL_BOARD = "CREATE_INITIAL_BOARD";
 export const CREATE_NEXT_BOARD = "CREATE_INITIAL_BOARD";
-
+export const ADD_CELL = "ADD_CELL";
 
 export function setSize(side) {
   var boxSize = side*side;
@@ -11,13 +11,28 @@ export function setSize(side) {
   }
 }
 
+export function addCell(index, board){
+
+  var newBoard = board.slice(0);
+  if(newBoard[index].status=="cell dead"){
+    newBoard[index].status = "cell alive";
+  } else {
+    newBoard[index].status = "cell dead";
+  }
+
+  return {
+    type: ADD_CELL,
+    payload: newBoard
+  }
+}
+
 export function createInitialBoard(boxSize){
 
   var board = [];
 
   for(var i = 0; i<boxSize; i++){
     var random = Math.random();
-    if(random > 0.8){
+    if(random > 0.7){
       var status = "cell alive";
     } else {
       var status = "cell dead";

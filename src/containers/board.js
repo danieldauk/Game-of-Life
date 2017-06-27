@@ -2,9 +2,8 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {createInitialBoard, createNextBoard} from "../actions/index";
+import {createInitialBoard, createNextBoard, addCell} from "../actions/index";
 
-import Cell from "../components/cell";
 
 
 
@@ -21,11 +20,12 @@ componentDidMount(){
 renderBoard(board){
   return board.map((cell, index)=>{
     return (
-      <Cell
-        status={cell.status}
-        index={index}
+      <div
+        onClick={()=>this.props.addCell(index, this.props.board)}
+        className={cell.status}
         key={index}
-      />
+      >
+      </div>
     );
   });
 }
@@ -42,7 +42,7 @@ renderBoard(board){
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({createInitialBoard, createNextBoard}, dispatch);
+  return bindActionCreators({createInitialBoard, createNextBoard, addCell}, dispatch);
 }
 
 function mapStateToProps({boxSize, board}){
