@@ -2,12 +2,28 @@ export const SET_SIZE = "SET_SIZE";
 export const CREATE_INITIAL_BOARD = "CREATE_INITIAL_BOARD";
 export const CREATE_NEXT_BOARD = "CREATE_INITIAL_BOARD";
 export const ADD_CELL = "ADD_CELL";
+export const SET_SPEED = "ADD_SPEED";
+export const SET_TIMEOUT = "SET_TIMEOUT";
 
 export function setSize(side) {
   var boxSize = side*side;
   return {
     type: SET_SIZE,
     payload: boxSize
+  }
+}
+
+export function changeTimeoutValue(value){
+  return {
+    type: SET_TIMEOUT,
+    payload: value
+  }
+}
+
+export function setSpeed(speed){
+  return {
+    type: SET_SPEED,
+    payload: speed
   }
 }
 
