@@ -18,6 +18,16 @@ componentDidMount(){
   this.startTimeout();
 }
 
+componentWillReceiveProps(){
+  if(this.props.boxSize === 400){
+      $(".cell").css({width: 25, height: 25});
+  } else if(this.props.boxSize ===1024){
+      $(".cell").css({width: 15.625, height: 15.625});
+  } else if (this.props.boxSize === 1600){
+      $(".cell").css({width: 12.5, height: 12.5});
+  }
+}
+
 
 startTimeout(){
     timeOut = setTimeout(()=>{
@@ -28,16 +38,18 @@ startTimeout(){
 
 stopTimeout(){
   clearTimeout(timeOut);
+  timeOut = 0;
 }
 
 renderBoard(board){
+
   return board.map((cell, index)=>{
     return (
       <div
         onMouseDown={()=>this.props.addCell(index, this.props.board)}
         className={cell.status}
         key={index}
-        id={index} 
+        id={index}
       >
       </div>
     );
@@ -55,6 +67,7 @@ renderBoard(board){
         <Controls
           stop={this.stopTimeout.bind(this)}
           start={this.startTimeout.bind(this)}
+          timeOut={timeOut}
           />
       </div>
     );

@@ -2,9 +2,16 @@ import React, {Component } from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {presets} from "../components/presets"
+import Chevron from "react-icons/lib/go/chevron-right";
+import Refresh from "react-icons/lib/fa/repeat";
+import Play from "react-icons/lib/fa/play";
+import Pause from "react-icons/lib/fa/pause";
+import Erase from "react-icons/lib/fa/eraser";
+import Step from "react-icons/lib/fa/step-forward";
 
 import {setSize, setSpeed, clearBoard, createInitialBoard, createNextBoard, presetBoard} from "../actions/index";
 
+var pause = false;
 
 class controls extends Component{
 
@@ -28,56 +35,78 @@ class controls extends Component{
     return(
       <div>
         <button
-          onClick={()=>this.props.start()}
-          >Play</button>
+          onClick={()=>{
+            if(pause){
+              this.props.start();
+              pause=false;
+            }
+          }}
+          >
+          <Play/>
+        </button>
         <button
-          onClick={()=>this.props.stop()}
-          >Pause</button>
+          onClick={()=>{
+            this.props.stop();
+            pause=true;
+          }}
+          >
+          <Pause/>
+        </button>
         <button
           onClick={()=>this.props.clearBoard(this.props.boxSize)}
           >
-          Clear</button>
+          <Erase/>
+        </button>
           <button
             onClick={()=>this.props.createInitialBoard(this.props.boxSize)}
             >
-            Reset</button>
+            <Refresh/>
+          </button>
             <button
               onClick={()=>this.props.createNextBoard(this.props.boxSize, this.props.board)}
               >
-              Step</button>
+              <Step/>
+            </button>
         <button
           onClick={()=>this.props.setSpeed(10)}
-          >10ms
+          ><Chevron/><Chevron/><Chevron/><Chevron/>
         </button>
         <button
           onClick={()=>this.props.setSpeed(100)}
-          >100ms
+          ><Chevron/><Chevron/><Chevron/>
         </button>
         <button
           onClick={()=>this.props.setSpeed(500)}
-          >500ms
+          ><Chevron/><Chevron/>
         </button>
         <button
           onClick={()=>{
             $(".cell").css({width: 25, height: 25});
             this.props.setSize(20);
-            this.props.createInitialBoard(this.props.boxSize);
+            this.props.createInitialBoard(400);
+            this.props.stop();
+            this.props.start();
+            pause=false;
           }}
           >20x20
         </button>
         <button
           onClick={()=>{
-            $(".cell").css({width: 15.625, height: 15.625});
             this.props.setSize(32);
-            this.props.createInitialBoard(this.props.boxSize);
+            this.props.createInitialBoard(1024);
+            this.props.stop();
+            this.props.start();
+            pause=false;
           }}
           >32x32
         </button>
         <button
           onClick={()=>{
-            $(".cell").css({width: 12.5, height: 12.5});
             this.props.setSize(40);
-            this.props.createInitialBoard(this.props.boxSize);
+            this.props.createInitialBoard(1600);
+            this.props.stop();
+            this.props.start();
+            pause=false;
           }}
           >40x40
         </button>
