@@ -5,7 +5,7 @@ import {bindActionCreators} from "redux";
 import {createInitialBoard, createNextBoard, addCell} from "../actions/index";
 import Controls from "./controls";
 
-var timeOut = 0
+var timeOut = 0;
 
 
 class board extends Component {
@@ -58,17 +58,16 @@ renderBoard(board){
 
   render(){
     return (
-      <div>
+      <div className="boxControls">
+        <Controls
+          stop={this.stopTimeout.bind(this)}
+          start={this.startTimeout.bind(this)}
+          />
         <div
           className="box"
           >
           {this.renderBoard(this.props.board)}
         </div>
-        <Controls
-          stop={this.stopTimeout.bind(this)}
-          start={this.startTimeout.bind(this)}
-          timeOut={timeOut}
-          />
       </div>
     );
   }

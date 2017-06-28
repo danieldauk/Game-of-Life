@@ -32,96 +32,104 @@ class controls extends Component{
 
   render(){
     return(
-      <div>
-        <button
-          onClick={()=>{
-            if(pause){
+      <div className="controls">
+        <div className="buttons">
+          <button
+            onClick={()=>{
+              if(pause){
+                this.props.start();
+                pause=false;
+              }
+            }}
+            >
+            <Play/>
+          </button>
+          <button
+            onClick={()=>{
+              this.props.stop();
+              pause=true;
+            }}
+            >
+            <Pause/>
+          </button>
+          <button
+            onClick={()=>this.props.clearBoard(this.props.boxSize)}
+            >
+            <Erase/>
+          </button>
+            <button
+              onClick={()=>this.props.createInitialBoard(this.props.boxSize)}
+              >
+              <Refresh/>
+          </button>
+              <button
+                onClick={()=>this.props.createNextBoard(this.props.boxSize, this.props.board)}
+                >
+                <Step/>
+          </button>
+        </div>
+        <div className="boardSizeButtons">
+          <button
+            onClick={()=>{
+              $(".cell").css({width: 25, height: 25});
+              this.props.setSize(20);
+              this.props.createInitialBoard(400);
+              this.props.stop();
               this.props.start();
               pause=false;
-            }
-          }}
-          >
-          <Play/>
-        </button>
-        <button
-          onClick={()=>{
-            this.props.stop();
-            pause=true;
-          }}
-          >
-          <Pause/>
-        </button>
-        <button
-          onClick={()=>this.props.clearBoard(this.props.boxSize)}
-          >
-          <Erase/>
-        </button>
+            }}
+            >20x20
+          </button>
           <button
-            onClick={()=>this.props.createInitialBoard(this.props.boxSize)}
+            onClick={()=>{
+              this.props.setSize(32);
+              this.props.createInitialBoard(1024);
+              this.props.stop();
+              this.props.start();
+              pause=false;
+            }}
+            >32x32
+          </button>
+          <button
+            onClick={()=>{
+              this.props.setSize(40);
+              this.props.createInitialBoard(1600);
+              this.props.stop();
+              this.props.start();
+              pause=false;
+            }}
+            >40x40
+          </button>
+        </div>
+        <div className="speedRange">
+          <input
+            defaultValue="10"
+            id="speedRange"
+            onChange={()=>{
+              var speed = Math.abs($("#speedRange")[0].valueAsNumber);
+              this.props.setSpeed(speed);
+            }}
+            min="-500"
+            max="10"
+            step="10"
+            type="range"
             >
-            <Refresh/>
-        </button>
-            <button
-              onClick={()=>this.props.createNextBoard(this.props.boxSize, this.props.board)}
-              >
-              <Step/>
-        </button>
-        <input
-          defaultValue="10"
-          id="speedRange"
-          onChange={()=>{
-            var speed = Math.abs($("#speedRange")[0].valueAsNumber);
-            this.props.setSpeed(speed);
-          }}
-          min="-500"
-          max="10"
-          step="10"
-          type="range"
-          ></input>
-        <button
-          onClick={()=>{
-            $(".cell").css({width: 25, height: 25});
-            this.props.setSize(20);
-            this.props.createInitialBoard(400);
-            this.props.stop();
-            this.props.start();
-            pause=false;
-          }}
-          >20x20
-        </button>
-        <button
-          onClick={()=>{
-            this.props.setSize(32);
-            this.props.createInitialBoard(1024);
-            this.props.stop();
-            this.props.start();
-            pause=false;
-          }}
-          >32x32
-        </button>
-        <button
-          onClick={()=>{
-            this.props.setSize(40);
-            this.props.createInitialBoard(1600);
-            this.props.stop();
-            this.props.start();
-            pause=false;
-          }}
-          >40x40
-        </button>
-        <select
-          placeholder="Presets"
-          id="selectPresets"
-          onChange={()=>{
-            this.props.presetBoard(presets[$("#selectPresets")[0].value].grid, this.props.boxSize);
-          }}
-          >
-          <option
-            value="" disabled  selected
-             >Presets
-           </option>
-           {this.renderOptions()}
-        </select>
+          </input>
+        </div>
+        <div className="selectPresets">
+          <select
+            id="selectPresets"
+            onChange={()=>{
+              this.props.presetBoard(presets[$("#selectPresets")[0].value].grid, this.props.boxSize);
+            }}
+            >
+            <option
+              value="" disabled  selected
+               >Presets
+             </option>
+             {this.renderOptions()}
+          </select>
+        </div>    
       </div>
     );
   }

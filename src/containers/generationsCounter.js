@@ -6,7 +6,7 @@ class generations extends Component {
   render(){
     return (
       <div className="generations">
-        {this.props.generations}
+        Generations: {this.props.generations}
       </div>
     );
   }
