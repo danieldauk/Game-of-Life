@@ -37,6 +37,7 @@ renderBoard(board){
         onMouseDown={()=>this.props.addCell(index, this.props.board)}
         className={cell.status}
         key={index}
+        id={index} 
       >
       </div>
     );

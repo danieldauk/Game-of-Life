@@ -5,9 +5,12 @@ export const ADD_CELL = "ADD_CELL";
 export const SET_SPEED = "ADD_SPEED";
 export const SET_TIMEOUT = "SET_TIMEOUT";
 export const CLEAR_BOARD = "CLEAR_BOARD";
+export const PRESET_BOARD = "PRESET_BOARD";
+
 
 export function setSize(side) {
   var boxSize = side*side;
+
   return {
     type: SET_SIZE,
     payload: boxSize
@@ -53,6 +56,43 @@ export function clearBoard(boxSize){
 
   return{
     type: CLEAR_BOARD,
+    payload: board
+  }
+
+}
+
+export function presetBoard(preset, boxSize){
+
+  var board = [];
+
+  for(var i = 0; i<boxSize; i++){
+    board.push({id: i, status: "cell dead"});
+  }
+
+//board center
+  var side = Math.sqrt(boxSize);
+  var rowPosition = Math.round(side/2);
+  var columnPosition = rowPosition * side;
+
+
+//image center
+  var imageRowCenter = Math.round(preset[0].length/2);
+  var imageColumnCenter = Math.round(preset.length/2) * side;
+
+//relative center
+    var center = rowPosition - imageRowCenter + columnPosition - imageColumnCenter;
+
+  for(var i = 0; i<preset.length; i++) {
+    for (var j = 0; j<preset[i].length; j++){
+      if(preset[i][j]){
+        board[center + j ].status = "cell alive";
+      }
+    }
+    center = center + side;
+  }
+
+  return{
+    type: PRESET_BOARD,
     payload: board
   }
 
