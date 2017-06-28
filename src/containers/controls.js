@@ -2,7 +2,6 @@ import React, {Component } from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {presets} from "../components/presets"
-import Chevron from "react-icons/lib/go/chevron-right";
 import Refresh from "react-icons/lib/fa/repeat";
 import Play from "react-icons/lib/fa/play";
 import Pause from "react-icons/lib/fa/pause";
@@ -61,24 +60,24 @@ class controls extends Component{
             onClick={()=>this.props.createInitialBoard(this.props.boxSize)}
             >
             <Refresh/>
-          </button>
+        </button>
             <button
               onClick={()=>this.props.createNextBoard(this.props.boxSize, this.props.board)}
               >
               <Step/>
-            </button>
-        <button
-          onClick={()=>this.props.setSpeed(10)}
-          ><Chevron/><Chevron/><Chevron/><Chevron/>
         </button>
-        <button
-          onClick={()=>this.props.setSpeed(100)}
-          ><Chevron/><Chevron/><Chevron/>
-        </button>
-        <button
-          onClick={()=>this.props.setSpeed(500)}
-          ><Chevron/><Chevron/>
-        </button>
+        <input
+          defaultValue="10"
+          id="speedRange"
+          onChange={()=>{
+            var speed = Math.abs($("#speedRange")[0].valueAsNumber);
+            this.props.setSpeed(speed);
+          }}
+          min="-500"
+          max="10"
+          step="10"
+          type="range"
+          ></input>
         <button
           onClick={()=>{
             $(".cell").css({width: 25, height: 25});
