@@ -10,6 +10,8 @@ import Step from "react-icons/lib/fa/step-forward";
 
 import {setSize, setSpeed, clearBoard, createInitialBoard, createNextBoard, presetBoard} from "../actions/index";
 
+import Generations from "./generationsCounter";
+
 var pause = false;
 
 class controls extends Component{
@@ -35,7 +37,10 @@ class controls extends Component{
       <div className="controls">
         <div className="buttons">
           <button
+            className="active"
             onClick={()=>{
+              $(".buttons button:nth-child(1)").addClass("active");
+              $(".buttons button:nth-child(2)").removeClass("active");
               if(pause){
                 this.props.start();
                 pause=false;
@@ -46,6 +51,8 @@ class controls extends Component{
           </button>
           <button
             onClick={()=>{
+              $(".buttons button:nth-child(2)").addClass("active");
+              $(".buttons button:nth-child(1)").removeClass("active");
               this.props.stop();
               pause=true;
             }}
@@ -71,6 +78,11 @@ class controls extends Component{
         <div className="boardSizeButtons">
           <button
             onClick={()=>{
+              $(".buttons button:nth-child(1)").addClass("active");
+              $(".buttons button:nth-child(2)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(1)").addClass("active");
+              $(".boardSizeButtons button:nth-child(2)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(3)").removeClass("active");
               $(".cell").css({width: 25, height: 25});
               this.props.setSize(20);
               this.props.createInitialBoard(400);
@@ -81,7 +93,13 @@ class controls extends Component{
             >20x20
           </button>
           <button
+            className="active"
             onClick={()=>{
+              $(".buttons button:nth-child(1)").addClass("active");
+              $(".buttons button:nth-child(2)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(1)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(2)").addClass("active");
+              $(".boardSizeButtons button:nth-child(3)").removeClass("active");
               this.props.setSize(32);
               this.props.createInitialBoard(1024);
               this.props.stop();
@@ -92,6 +110,11 @@ class controls extends Component{
           </button>
           <button
             onClick={()=>{
+              $(".buttons button:nth-child(1)").addClass("active");
+              $(".buttons button:nth-child(2)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(1)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(2)").removeClass("active");
+              $(".boardSizeButtons button:nth-child(3)").addClass("active");
               this.props.setSize(40);
               this.props.createInitialBoard(1600);
               this.props.stop();
@@ -102,6 +125,7 @@ class controls extends Component{
           </button>
         </div>
         <div className="speedRange">
+          <img src="src/img/turtle.png"/>
           <input
             defaultValue="10"
             id="speedRange"
@@ -115,6 +139,7 @@ class controls extends Component{
             type="range"
             >
           </input>
+          <img src="src/img/rabbit.png"/>
         </div>
         <div className="selectPresets">
           <select
@@ -129,7 +154,16 @@ class controls extends Component{
              </option>
              {this.renderOptions()}
           </select>
-        </div>    
+        </div>
+          <div className="name">
+            <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">
+            <div className="logo">
+              <h3>Conway's</h3>
+              <h3>Game of Life</h3>
+            </div>
+              </a>
+          </div>
+        <Generations/>
       </div>
     );
   }
